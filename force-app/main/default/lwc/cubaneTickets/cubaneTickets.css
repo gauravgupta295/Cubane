@@ -1,0 +1,22 @@
+:host {  
+  --lwc-formLabelFontSize: 14px;    
+}
+.myTable table{
+    color:rgb(7, 7, 129);
+  }
+  .categories{
+    background: #404b5f;
+    font-size: 20px;
+    color: white;
+    border-top-left-radius: 5px;
+    padding: 10px;
+    border-top-right-radius: 5px;
+}
+
+.font1{
+  font-size: 15px;
+}
+
+.font2{
+  font-size: 14px;
+}

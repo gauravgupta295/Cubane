@@ -1,0 +1,17 @@
+<template>
+  <div style="padding: 20px">
+    <lightning-layout>           
+        <lightning-layout-item size="4">
+         <!-- <div class="header"> Knowledge Base</div> -->
+        </lightning-layout-item>     
+        <lightning-layout-item size="8">
+            <lightning-input style="margin-left: 15px; height: 30px;" placeholder="Search" name="textSearchBox" onchange={searchTextValue}></lightning-input>
+          </lightning-layout-item>  
+          <lightning-layout-item size="1" style="margin-top: 20px;margin-left: 15px;">
+            <lightning-button value="Search" variant="brand" class="button" label="Search" onclick={handleSearchArtcile}  >              
+            </lightning-button>
+          </lightning-layout-item>                   
+    </lightning-layout>
+  </div>
+
+</template>

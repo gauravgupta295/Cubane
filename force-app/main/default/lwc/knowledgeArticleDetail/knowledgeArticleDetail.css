@@ -1,0 +1,18 @@
+.articleTitle
+{
+    /*font-size: 15px;*/
+    font-size: 20px;
+    font-weight: 400;
+    background-color: #404b5f;
+    color:white;
+    padding-left:5px;
+    border-radius: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    
+}
+.articleDetail{
+    color:#404b5f;
+    padding-left:20px;
+    padding-right:20px;
+}

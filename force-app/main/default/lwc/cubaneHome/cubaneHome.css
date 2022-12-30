@@ -1,0 +1,16 @@
+.c-container {    
+    background-color: white;;
+    margin-left: 20px;
+}
+
+ul.li{color: white;}
+
+.slds-tabs_default__item
+{
+    Color: var(--slds-c-tabs-item-text-color, white);       
+}
+
+.slds-tabs_default ul li
+{
+    Color: var(--slds-c-tabs-item-text-color, white);   
+}

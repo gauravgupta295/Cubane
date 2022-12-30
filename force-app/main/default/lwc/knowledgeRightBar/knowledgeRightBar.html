@@ -1,0 +1,27 @@
+<template>   
+    <div class="light-background" style="margin-top: 20px;margin-right: 20px;">
+        <template if:true={displayDetail}>
+           <c-knowledge-article-detail content-detail ={contentDetail}></c-knowledge-article-detail>
+        </template>
+        <template if:true={displayCategory} for:each={contentDetail} for:item="c">          
+            <div  class="categories" key={c} for:index="c" style="padding: 8px;">{c.label}</div>
+            <template for:each={c.items} for:item="cc" style="padding: 20px;">
+                <lightning-layout key={cc}  style="padding-top: 20px;padding-left: 20px;">
+                    <lightning-layout-item>                 
+                   <div if:true={cc.items} class="categories1"> {cc.label}</div>
+                    <template  for:each={cc.items} for:item="ccc" style="padding: 20px;">
+                        <li key={ccc} >                            
+                                <!-- {ccc.label}  -->
+                                <a href="#" onclick={ItemSelected} data-id={ccc.name}>{ccc.label}</a>   
+                               </li>                               
+                                </template>                                               
+                </lightning-layout-item>
+                </lightning-layout>               
+            </template> 
+            <div key={c} style="margin-bottom: 40px;"></div>        
+        </template>
+        <template if:true={displayList}>
+            <c-knowledge-article-list content-detail ={contentDetail} onselected={onItemSelected}></c-knowledge-article-list>
+        </template>
+    </div>
+</template>

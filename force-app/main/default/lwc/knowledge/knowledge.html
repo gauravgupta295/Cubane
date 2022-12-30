@@ -1,0 +1,36 @@
+<template>    
+<div class="slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none" style="background-color:#edf2f6;">   
+      <!--<lightning-layout>           
+        <lightning-layout-item size="11">
+            <c-knowledge-top-bar onsearch={searchArticle}></c-knowledge-top-bar>
+        </lightning-layout-item>             
+    </lightning-layout> -->
+    <lightning-layout>           
+        <lightning-layout-item size="12">
+    <div class="c-container">
+        <lightning-layout>
+            <template for:each={menuItems} for:item="menu" for:index="index">
+          
+            <lightning-layout-item key={menu} name={menu} style="margin: 10px;">
+                <div class="custom-box" data-category={menu} onclick={filterCategories} >{menu}</div>
+            </lightning-layout-item>  
+       
+        </template>          
+        </lightning-layout>
+    </div>
+</lightning-layout-item>                   
+</lightning-layout>
+    <lightning-layout>
+        <lightning-layout-item  size="4">
+            <div style="  position: sticky;top: 0;">
+                <c-knowledge-left-bar items={categories} onselected={onItemSelected}></c-knowledge-left-bar>
+            </div>
+        </lightning-layout-item>
+        <lightning-layout-item size="8">
+           
+            <c-knowledge-right-bar content-detail={articleDetail} content-type={rightBarScreenType}></c-knowledge-right-bar>
+       
+        </lightning-layout-item>                   
+    </lightning-layout>
+</div>
+</template>

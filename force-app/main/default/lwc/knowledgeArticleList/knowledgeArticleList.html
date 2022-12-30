@@ -1,0 +1,27 @@
+<template>
+    
+    <!-- <lightning-layout size="12">
+   
+<lightning-layout-item key={article.Id} >
+       <div><a href="#" onclick={LoadArticleDetail} data-id={article.Id}>{article.Title}</a></div>
+    </lightning-layout-item>
+
+</lightning-layout> -->
+<template if:true={articleList}>
+<template for:each={articleList} for:item="article">
+<lightning-layout key={article.Id} horizontal-align="left" style="background: #d3d4ff;padding: 10px;" class="slds-grid slds-grid_vertical slds-text-align--left">
+    <lightning-layout-item horizontal-align="left" class="slds-text-align--left list">
+        <a href="#" onclick={LoadArticleDetail} data-id={article.Id}>{article.Title}</a>
+    </lightning-layout-item>
+    <!-- <lightning-layout-item class="slds-text-align--left slds-m-top_small">
+        <lightning-layout>
+            <lightning-layout-item  horizontal-align="left" size="4">{article.Title}</lightning-layout-item>
+            <lightning-layout-item horizontal-align="right">{article.Title}</lightning-layout-item>
+        </lightning-layout>
+    </lightning-layout-item> -->
+</lightning-layout>
+<div key={article.Id} style="margin-bottom:5px;"></div>
+</template>
+</template>
+<template if:false={articleList}>No Result Found</template>
+</template>

@@ -1,0 +1,69 @@
+:host {
+    --sds-c-textarea-sizing-min-height: 200px;    
+    --lwc-formLabelFontSize: 14px;    
+    --lwc-formLabelFontWeight: 400;
+    --lwc-formLabelColor: #404a79;
+    --sds-c-button-brand-color-background: #488cdd;
+ }
+
+ lightning-button.button {
+	--sds-c-button-brand-color-background: #488cdd;
+    --sds-c-button-text-color: #f4f7f9;
+}
+
+.labeFont
+{
+   /*font-size:  .8rem;*/
+   font-size:12px;
+   color: gray;
+}
+
+.comment
+{
+    margin-left: 20px;
+    font-size: 15px;
+}
+.commentBorder
+{
+    padding: 5px;
+}
+.labeUserName
+{
+   /*font-size:  1rem;*/
+   font-size:17px;
+   color: #404a79;;
+}
+ .c-container {
+    border: 1px solid #d8dde6;  
+    background-color: #404b5f;;
+    margin-left: 20px;
+    height: 50px;
+    padding: 5px;
+}
+.custom-box {
+    text-align: center;
+    color: #f4f6f9;
+    padding: 0.5rem;
+        font-weight: 500;
+    font-size: 20px; 
+    cursor: pointer;
+}
+.light-background{
+    background: #edf2f6;
+    margin-left: 20px;
+    padding: 20px;
+}
+
+.DefaultFont{
+    font-family: var(--lwc-fontFamily,Lato);
+    /*font-size: 10.5px;*/
+    color:#404b5f;
+}
+
+.font15{
+    font-size:15px;
+}
+
+.font14{
+    font-size: 14px;
+}

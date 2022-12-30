@@ -1,0 +1,79 @@
+<template>
+    <div class="slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none" style="background-color:white;">   
+        <div class="categories">
+            <lightning-layout-item size="4">
+            <div > My Tickets</div>
+           </lightning-layout-item>  </div>   
+        <lightning-layout>
+            <lightning-layout-item padding="around-small" size="12" style="width:75%">
+                <div class="slds-grid" style="height:50px">
+                    <div class="slds-size_1-of-3" style="width:160px; padding-right: 4px;color:rgb(7, 7, 129)">
+                        <lightning-combobox style ="color:rgb(7, 7, 129)" name="status" label="Status" value={value} options={StatusOptions} 
+                        
+                        onchange={handleStatusChange} class="font2"> </lightning-combobox> 
+                    </div>
+                    <div class="slds-size_1-of-3" style="width:160px; padding-right: 4px;">
+                        <lightning-combobox name="priority" label="Priority" value={Priorityvalue} options={PriorityOptions} 
+                       
+                        onchange={handlePriorityChange} class="font2"> </lightning-combobox> 
+                    </div>
+                    <div class="slds-size_1-of-3" style="width:80px; padding-top: 20px">
+                        <lightning-button label="Filter" variant="brand" onclick={filterData} class="slds-m-left_x-small font1" slot="action"></lightning-button>
+                    </div>
+                    <div class="slds-size_1-of-3" style="width:160px; padding-top: 20px">
+                        <lightning-button label="Reset" variant="brand" onclick={resetFilter} class="slds-m-left_x-small font1" slot="action"></lightning-button>
+                    </div>
+                    
+                </div>
+            </lightning-layout-item>
+            
+            <lightning-layout-item size="9">
+                <div if:true={showNewTicket} class="slds-size_2-of-3" style="width:160px; padding-top: 34px">
+                    <lightning-button label="New Ticket" variant="brand" slot="action"
+                    onclick={openChildModal} class="slds-size_full font1" name="NewTicket" ></lightning-button>
+                </div>
+            </lightning-layout-item>
+
+        </lightning-layout>
+        <c-add-case-through-modal-popup is-modal-open={isChildModalOpen} is-new={isNewRecord} priority-options={PriorityOptions}
+            onrecordcleared={handleRecordCleared} 
+            onpopupclosed={handlePopUpClosed}
+            onnewrecordcreated={handleNewRecordCreated}>
+        </c-add-case-through-modal-popup>
+
+        
+
+        <div class="myTable font1">
+        <lightning-datatable key-field="CaseId" 
+                                hide-checkbox-column="true"
+                                data={recordsListInPage}
+                                columns={columns}
+                                sorted-by={sortBy}
+                                sorted-direction={sortDirection}
+                                onsort={doSorting}>
+        </lightning-datatable>
+    </div>
+        <div class="slds-align_absolute-center"> 
+            <div class="slds-p-right_xx-small">
+                     
+                <lightning-button label="Prev"
+                disabled={isPrev} onclick={handlePrev}
+                                    variant="brand"
+                                    icon-name="utility:back"
+                                    name="prev" class="font1"></lightning-button>  
+            </div>
+            <span class="slds-badge slds-badge_lightest">
+                {recordStart}-{recordEnd} of {totalRecords} | Page {pageNumber} of {totalPages}
+            </span>
+            <div class="slds-p-left_xx-small">
+                <lightning-button label="Next"
+                disabled={isNext} onclick={handleNext}
+                                    variant="brand"
+                                    icon-name="utility:forward"
+                                    icon-position="right"
+                                    name="next" class="font1"></lightning-button>
+            </div>
+        </div>  
+    </div>
+    
+</template>

@@ -1,0 +1,156 @@
+<template>
+
+    <div class="DefaultFont">
+        <template if:true={loaded}>
+            <lightning-spinner alternative-text="Loading"></lightning-spinner>
+        </template>
+        <div>
+            <lightning-layout class="c-container">
+                <lightning-layout-item>
+                    <div class="custom-box"> {Feed}</div>
+                </lightning-layout-item>
+                <lightning-layout-item>
+                    <!-- commented for reference (Attribute): time-zone={loggedInUserTimeZone}-->
+                    <!--
+                    <div class="custom-box">Last Modified Date: <lightning-formatted-date-time
+                            value={ticketLastModifyDate} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                            minute="2-digit" hour12="false"></lightning-formatted-date-time>
+                    </div>-->
+                    <div class="custom-box" style="font-size: 20px;">{collabGroupName}</div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+
+        <div class="light-background">
+            <lightning-layout horizontal-align="left"
+                class="slds-size_8-of-12 slds-grid slds-grid_vertical slds-text-align--left">
+                <lightning-layout-item>
+                    <p> <br />
+                        <lightning-icon icon-name="utility:comments" alternative-text="Connected" title="Connected">
+                        </lightning-icon>
+                        <label class="labeUserName" style="margin-left:5px"> {currentUserName}</label>
+                    </p>
+                    <div class="labeFont" style="margin-left:10px; font-size:12px;">Last Modified Date: <lightning-formatted-date-time value={ticketCreatedDate}
+                        year="numeric" month="numeric" day="numeric" hour="2-digit" minute="2-digit"
+                        hour12="false"></lightning-formatted-date-time>
+                    </div>
+                    <div style="margin-left:20px; margin-top:20px; font-size:15px;color:rgb(105, 105, 105);">Description</div>
+                    <div style="border: 1px solid #c9c9c9 ;padding: 20px; background-color: #f3f3f3" class="comment">
+                        <lightning-formatted-rich-text value={descriptionValue} disabled>
+                        </lightning-formatted-rich-text>
+                    </div>
+                    <template for:each={feedItemAttachments} for:item="attachment">
+                        <!--<div  style="float:left; ">   -->
+                        <a key={attachment.URL} href={attachment.URL} src={url} download="file">
+                            <lightning-icon icon-name="doctype:attachment" size="small"></lightning-icon>
+                            {attachment.Title}
+                        </a>
+
+                        <!--</div>-->
+                        <br key={attachment.URL} />
+                    </template>
+
+                </lightning-layout-item>
+                <lightning-layout-item>
+                    <p> <br />
+                        <lightning-icon icon-name="utility:comments" alternative-text="Connected" title="Connected">
+                        </lightning-icon>
+                        <label class="labeUserName" style="margin-left:5px"> {runningUserName}</label>                
+                        
+                    </p>    
+                    <!--<div class="commentLabel">{currentUserName}</div>-->
+                    <div style="margin-bottom: 10px;" class="comment">
+                        <lightning-input-rich-text disabled-categories="INSERT_CONTENT" formats={formats}
+                            value={caseFeedComment} onchange={SavecaseFeedComment}> </lightning-input-rich-text>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-size_3-of-3" style="padding-right: 4px; padding-bottom: 8px;">
+                            <!-- <lightning-input type="file" multiple="true"
+                    accept=".xlsx, .xls, .csv, .png, .doc, .docx, .pdf, .jpg, .jpeg, .JPG, .JPEG"
+                    label="Attachment" onchange={handleFileUploaded}></lightning-input> -->
+
+                            <div class="slds-form-element">
+
+                                <div class="slds-form-element__control">
+                                    <div class="slds-file-selector slds-file-selector_files">
+                                        <div class="slds-file-selector__dropzone" style="border: none;">
+                                            <form>
+                                            <input type="file" onchange={handleFileUploaded} multiple
+                                                class="slds-file-selector__input slds-assistive-text"
+                                                accept=".xlsx, .xls, .csv, .png, .doc, .docx, .pdf, .jpg, .jpeg, .JPG, .JPEG"
+                                                id="file-upload-input-107"
+                                                aria-labelledby="file-selector-primary-label-105 file-selector-secondary-label106">
+                                            </form>
+                                            <label class="slds-file-selector__body" for="file-upload-input-107"
+                                                id="file-selector-secondary-label106" style="border: none;">
+                                                <lightning-button-icon disabled=true variant="bare" icon-name="utility:link"
+                                                    alternative-text="Settings"></lightning-button-icon>
+                                                <span class="slds-file-selector__text slds-medium-show Font14"><a>File
+                                                    Upload</a></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <template if:true={filesData}>
+                                <template for:each={filesData} for:item="imgName" for:index="index">
+                                    <li style="font-size:12px" key={imgName.fileName} data-id={index}>{imgName.fileName}
+                                    </li>
+
+
+                                </template>
+                            </template>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 10px;float: left;">
+                        <lightning-button label="Submit" variant="brand" class="button" onclick={putCaseComment}>
+                        </lightning-button>
+                    </div>
+
+
+                </lightning-layout-item>
+                <lightning-layout-item>
+                    <div style="font-size: 20px;
+            font-weight: 600;
+            width: 15%;">Comments</div>
+                    <template for:each={feedItemComments} for:item="feedItemComment">
+                        <div class="commentBorder" key={feedItemComment.feedComment.Id}>
+                            <p> <br />
+                                <lightning-icon icon-name="utility:comments" alternative-text="Connected"
+                                    title="Connected">
+                                </lightning-icon>
+                                <label class="labeUserName" style="margin-left:5px">
+                                    {feedItemComment.feedComment.CreatedBy.Name}</label>
+
+                            </p>
+                            <!-- commented for reference (Attribute): time-zone={loggedInUserTimeZone} -->
+                            <div class="labeFont" style="margin-left:10px">Last Modified Date <lightning-formatted-date-time value={feedItemComment.feedComment.CreatedDate}
+                                    year="numeric" month="numeric" day="numeric" hour="2-digit" minute="2-digit"
+                                    hour12="false"></lightning-formatted-date-time>
+                            </div>
+                            <br />
+
+                            <div style = "background:#e0ecfa ;padding: 20px;">
+                                <lightning-formatted-rich-text value={feedItemComment.feedComment.CommentBody} disabled>
+                                </lightning-formatted-rich-text>
+                            </div>
+
+                            <template for:each={feedItemComment.feedAttachments} for:item="attachment">
+                                <!--<div  style="float:left; ">   -->
+                                <a key={attachment.URL} href={attachment.URL} src={url} download="file">
+                                    <lightning-icon icon-name="doctype:attachment" size="small"></lightning-icon>
+                                    {attachment.Title}
+                                </a>
+
+                                <!--</div>-->
+                                <br key={attachment.URL} />
+                            </template>
+                        </div>
+                    </template>
+                </lightning-layout-item>
+
+
+            </lightning-layout>
+        </div>
+    </div>
+</template>

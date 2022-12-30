@@ -1,0 +1,13 @@
+<template>
+    <!--<div style="padding:20px">-->
+        <div>
+        <lightning-button-icon style="float:right; padding-top:6px" onclick={openPrintWindow} icon-name="utility:print"  variant="brand"  alternative-text="Print" title="Print" size="xx-large"></lightning-button-icon>
+    <div class="articleTitle">{articleTitle}</div>
+   
+    <br/>
+    <div class="articleDetail">
+     <lightning-formatted-rich-text value={articleDetail}></lightning-formatted-rich-text>  
+    </div> 
+</div>
+    <!-- <div class="container" lwc:dom="manual"></div>  -->
+</template>

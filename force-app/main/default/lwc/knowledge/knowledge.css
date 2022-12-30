@@ -1,0 +1,27 @@
+.c-container {
+    border: 1px solid #d8dde6;  
+    background: #fafafc;
+    margin-left: 20px;
+    margin-right: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.custom-box {
+    text-align: center;
+    color: #404b5f;;
+    padding: 0.5rem;
+    border: 0px;
+    font-weight: 500;
+    font-size: 15px; 
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.selectd
+{
+    background: #488cdd; 
+    color:#f5f5ff;
+    border-radius: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
+}

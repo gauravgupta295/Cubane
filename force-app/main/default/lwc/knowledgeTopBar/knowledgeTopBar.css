@@ -1,0 +1,17 @@
+.header
+{
+    font-size: 30px;
+    font-weight: 700;
+    color: #070781;
+    padding: 10p;
+    margin-left: 20px;
+}
+lightning-button.button {
+	--sds-c-button-brand-color-background: #488cdd;
+    --sds-c-button-text-color: #f4f7f9;
+}
+.slds-input
+{
+    
+    height: var(--lwc-spacingXxLarge,3rem);    
+}

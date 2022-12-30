@@ -1,0 +1,169 @@
+<template>
+    <div class="categories">
+        <lightning-layout-item size="4">
+        <div >Forum</div>
+       </lightning-layout-item>  
+    </div>   
+    <article class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+            </header>
+        </div>
+
+        <div class="slds-card__body slds-card__body_inner">
+
+            <!--
+            <lightning-layout multiple-rows="false" style="border:1px solid #ccc;margin: 5px; margin-bottom:2rem">
+                <template for:each={forums} for:item="forum">
+                    <lightning-layout-item key={forum.value} padding="around-small" size="3">
+
+                        <lightning-input data-id={forum.value} data-label={forum.label} label={forum.label}
+                            type="checkbox" value={forum.value} onchange={handleListInputChange}>
+                        </lightning-input>
+                    </lightning-layout-item>
+
+                </template>
+            </lightning-layout>-->
+
+            <div class="slds-grid slds-gutters slds-p-vertical_medium slds-p-horizontal_medium"
+                style="border:1px solid #ccc;margin: 5px; margin-bottom:2rem; font-size:14px;">
+
+                <div class="slds-float_left">
+                    Email Notification Settings:
+                </div>
+                <div class="slds-float_left slds-p-left_x-small">
+                    <lightning-input type="checkbox" label="Opt out of replies" variant="label-hidden" checked={optOutEmail} onchange={handleChangeChatterEmailSetting}>
+                    </lightning-input>
+                </div>
+                <div class="slds-float_left">
+                    Opt out of emails
+                </div>
+            </div>
+
+            <lightning-layout>
+                <lightning-layout-item padding="around-small" style="width:15%;">
+                    <lightning-combobox value={value} placeholder="Any" options={optionsCategory}
+                        onchange={handleFilterButtonClick} label="Category" class="labelFont14"></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small">
+                    <lightning-input type="text" label="Search" onchange={handleTopicFilter} class="labelFont14"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" class="slds-m-top_large">
+                    <lightning-button label="Search" variant="brand" onclick={handleSearchFilter} class="buttonStyle"></lightning-button>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" alignment-bump="left" class="slds-m-top_large">
+                    <lightning-button label="New Topic" variant="brand" onclick={handleCreateTopicButton} class="buttonStyle"></lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>
+
+
+
+
+            <div class="myTable">
+                <lightning-datatable key-field="CaseId" hide-checkbox-column="true" data={recordsListInPage}
+                    columns={columns} sorted-by={sortBy} sorted-direction={sortDirection} onsort={doSorting}>
+                </lightning-datatable>
+            </div>
+            <template if:true={empty}>
+                No data to display
+            </template>
+        </div>
+    </article>
+
+    <template if:true={showCreateTopicModal}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+
+                    <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"
+                        variant="bare-inverse" onclick={handleCloseCreateTopicModal} class="slds-modal__close">
+                    </lightning-button-icon>
+
+                    <h2 class="slds-text-heading_small">Create Topic</h2>
+                </header>
+
+
+
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <template if:true={showSpinner}>
+                        <lightning-spinner alternative-text="Loading" size="medium" class="spinnerClass">
+                        </lightning-spinner>
+                    </template>
+
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                            <div class="slds-m-around_medium">
+                                <lightning-combobox value={value} options={forums} label="Category"
+                                    onchange={handleChangeNewTopicForumGroup} required></lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-m-around_medium">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                                <!--<div class="posttLabel">Write a Post</div>-->
+                                <lightning-input-rich-text label ="Write a Post" value={richtext} onchange={handleChangeRTF} 
+                                field-level-help={placeHolderValue} 
+                                label-visible 
+                                required
+                                formats={formats}>
+                                </lightning-input-rich-text>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-m-around_medium">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                                <div class="slds-form-element">
+
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-file-selector slds-file-selector_files">
+                                            <div class="slds-file-selector__dropzone" style="border: none;">
+                                                <input type="file" onchange={handleFileUploaded} multiple
+                                                    class="slds-file-selector__input slds-assistive-text"
+                                                    accept=".xlsx, .xls, .csv, .png, .doc, .docx, .pdf, .jpg, .jpeg, .JPG, .JPEG"
+                                                    id="file-upload-input-107"
+                                                    aria-labelledby="file-selector-primary-label-105 file-selector-secondary-label106">
+                                                <label class="slds-file-selector__body" for="file-upload-input-107"
+                                                    id="file-selector-secondary-label106" style="border: none;">
+                                                    <lightning-button-icon disabled=true variant="bare" icon-name="utility:link"
+                                                        alternative-text="Settings"></lightning-button-icon>
+                                                    <span class="slds-file-selector__text slds-medium-show"><a>File
+                                                        Upload</a></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <template if:true={filesData}>
+                                    <template for:each={filesData} for:item="imgName" for:index="index">
+
+                                        <li class="slds-form-element__control" key={imgName.fileName} data-id={index}>
+                                            {imgName.fileName}
+                                        </li>
+                                    </template>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+
+                    <lightning-button label="Submit" variant="brand" onclick={handleSubmitTopic}>
+                    </lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

@@ -1,0 +1,154 @@
+<template>
+<div class="DefaultFont">
+<template if:true={loaded}>
+    <lightning-spinner alternative-text="Loading"></lightning-spinner>
+</template>
+<div>
+<lightning-layout class="c-container" style="padding-left: 13px;">
+    <lightning-layout-item>
+        <div class="custom-box">Subject: {ticketSubject}    
+        </div>
+    </lightning-layout-item>
+</lightning-layout >
+<div style="float:right; padding-right:5px">
+    <p style="font-size:15px"> <a href="/s/ticket/Case/Default">Close</a></p>
+</div>
+</div>
+<div class="light-background">
+    <lightning-layout horizontal-align="left" class="slds-size_8-of-12 slds-grid slds-grid_vertical slds-text-align--left">
+    <lightning-layout-item horizontal-align="left" class="slds-size_3-of-12 slds-text-align--left list">
+        <div style="margin-bottom: 10px;">
+            <lightning-combobox name="priority" class="font14" label="Priority" value={Priorityvalue} options={PriorityOptions} 
+            placeholder="Select Priority" 
+            onchange={handlePriorityChange} > </lightning-combobox> 
+        </div>
+    </lightning-layout-item>
+    <lightning-layout-item horizontal-align="left" class="slds-size_6-of-12 slds-text-align--left list">
+        <!--<div class="slds-grid" style="height:70px">-->
+            <div class="slds-grid">
+            <div style="padding: 0px 4px 7px 0px; height:100%; width: 100%;">
+                <!-- <lightning-input label="CC" value={ccValue} placeholder="Use a semicolon to separate email addresses" 
+                    onchange={handleCCChange}> </lightning-input>    -->
+
+                    <lightning-textarea style='--sds-c-textarea-sizing-min-height:50px;'  max-length ="1024" label="CC: Use a semicolon to separate email addresses" value={ccValue} placeholder="john@email.com; michael@gmail.com"  onchange={handleCCChange}
+                ></lightning-textarea> 
+
+            </div>
+        </div>
+    </lightning-layout-item>
+    <lightning-layout-item horizontal-align="left" class="slds-size_1-of-12 slds-text-align--left list">
+        <div style="margin-bottom: 10px; margin-top:15px;">
+            <lightning-button label="Save" variant="brand" class="button" disabled={IsValid} onclick={updateTicketDetail}> </lightning-button> 
+        </div>
+    </lightning-layout-item>
+    <lightning-layout-item horizontal-align="left" class="slds-size-8-of-12 slds-text-align--left list">
+        <div style="margin-bottom: 10px;" >
+            <div style="margin-left:8x; margin-top:20px; font-size:15px;color:rgb(105, 105, 105);">Description</div>
+            <div class="labeFont">Last Modified Date <lightning-formatted-date-time value={ticketLastModifyDate} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                minute="2-digit" time-zone={loggedUserTimeZone}  hour12="false"></lightning-formatted-date-time> </div>
+            <lightning-textarea disabled="true" value={descriptionValue} class="font15" variant="label-hidden"> </lightning-textarea> 
+        </div>
+    </lightning-layout-item>
+
+    <lightning-layout-item>
+        <template for:each={caseAttachments} for:item="attachment">
+            <!--<div  style="float:left; ">   -->
+            <a key={attachment.URL} href={attachment.URL} src={url} download="file">
+                <lightning-icon icon-name="doctype:attachment" size="small"></lightning-icon>
+                {attachment.contentVersion.Title}
+            </a>
+
+            <!--</div>-->
+            <br key={attachment.URL} />
+        </template>
+    </lightning-layout-item>
+
+    <lightning-layout-item>
+        
+            
+        <p> <br />
+            <lightning-icon icon-name="utility:comments" alternative-text="Connected" title="Connected">
+            </lightning-icon>
+            <label class="labeUserName" style="margin-left:5px;" > {currentUserName}</label>                
+            
+        </p>    
+        
+        <div style="margin-bottom: 10px;" class="comment">          
+            <lightning-input-rich-text disabled-categories="INSERT_CONTENT" formats={formats} name ="commentSection" value={caseFeedComment} onchange={SavecaseFeedComment}> </lightning-input-rich-text> 
+        </div> 
+        <div class="slds-grid" >
+            <div class="slds-size_3-of-3" style="padding-right: 4px; padding-bottom: 8px;">                        
+                <!-- <lightning-input type="file" multiple="true"
+                accept=".xlsx, .xls, .csv, .png, .doc, .docx, .pdf, .jpg, .jpeg, .JPG, .JPEG"
+                label="Attachment" onchange={handleFileUploaded}></lightning-input> -->
+                <div class="slds-form-element">
+
+                    <div class="slds-form-element__control">
+                    <div class="slds-file-selector slds-file-selector_files" >
+                        <div class="slds-file-selector__dropzone" style="border: none;">
+                            <form>
+                        <input type="file"  onchange={handleFileUploaded} multiple class="slds-file-selector__input slds-assistive-text" accept=".xlsx, .xls, .csv, .png, .doc, .docx, .pdf, .jpg, .jpeg, .JPG, .JPEG" id="file-upload-input-107" aria-labelledby="file-selector-primary-label-105 file-selector-secondary-label106">
+                    </form>
+                        <label class="slds-file-selector__body" for="file-upload-input-107" id="file-selector-secondary-label106" style="border: none;">
+                            <lightning-button-icon disabled=true variant="bare" icon-name="utility:link"  alternative-text="Settings"></lightning-button-icon>
+                            <span class="slds-file-selector__text slds-medium-show font14"><a>File Upload</a></span>
+                        </label>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                
+                <template if:true={filesData}>
+                    <template for:each={filesData} for:item="imgName" for:index="index">
+                        <li style="font-size:13px" key={imgName.fileName} data-id={index}>{imgName.fileName}</li>
+                        <!-- <span key={imgName.fileName} data-id={index} onclick={removeReceiptImage} class="removeImage">x</span>  -->
+                        
+                    </template>
+                </template>
+            </div>
+        </div>     
+        <div style="margin-bottom: 10px;">
+            <lightning-button label="Reply/Comment" variant="brand" class="button" onclick={putCaseComment}> </lightning-button> 
+        </div>
+    
+    
+    </lightning-layout-item>
+    <lightning-layout-item>
+        <div style="font-size: 20px;
+        width: 15%;">Comments</div>
+        <template for:each={caseFeeds} for:item="caseFeed">
+            <div class="commentBorder" key={caseFeed.Id}>
+        <p> <br />
+            <lightning-icon icon-name="utility:comments" alternative-text="Connected" title="Connected">
+            </lightning-icon>
+            <label class="labeUserName" style="margin-left:5px">  {caseFeed.Name}</label>
+            
+        </p>     
+        <div class="labeFont" style="margin-left:10px;">Last Modified Date <lightning-formatted-date-time value={caseFeed.LastModifiedDate} year="numeric" month="numeric" day="numeric" hour="2-digit"
+            minute="2-digit" time-zone={loggedUserTimeZone}  hour12="false"></lightning-formatted-date-time> </div>
+        <br />          
+        
+        <div style = "background:#e0ecfa ;padding: 20px;">
+            <lightning-formatted-rich-text value={caseFeed.Body} disabled> </lightning-formatted-rich-text> 
+        </div>                
+        <div>
+            <!--<ul style="list-style:circle;font-size:13px;font-weight:bold;">-->
+            <template for:each={caseFeed.Attachements} for:item="url">
+                <!--<div  style="float:left; ">   -->                            
+                        <a key={url.id} href={url.URL} src={url} download="file">
+                            <lightning-icon icon-name="doctype:attachment" size="small"></lightning-icon>{url.Title}</a>   
+                                                                                
+                        <!--</div>-->
+                <br key={url.id}/>
+            </template>
+        <!--</ul>-->
+        </div>
+    </div>
+    </template>
+    </lightning-layout-item>
+    
+    
+</lightning-layout>
+</div>
+</div>
+</template>

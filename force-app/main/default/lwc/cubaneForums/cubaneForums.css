@@ -1,0 +1,27 @@
+.myTable table>thead .slds-cell-fixed.slds-has-button-menu, .myTable table>thead .slds-cell-fixed.slds-has-button-menu:hover{
+    background: #404a79;
+}  
+.categories{
+    background: #404b5f;
+    font-size: 20px;
+    color: white;
+    border-top-left-radius: 5px;
+    padding: 10px;
+    border-top-right-radius: 5px;
+}
+
+.buttonStyle{
+    font-size: 15px;
+}
+
+.labelFont14{
+    font-size: 14px;
+}
+
+:host {  
+    --lwc-formLabelFontSize: 14px;    
+}
+
+.myTable {
+    font-size:15px;
+}
